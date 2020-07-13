@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/countryNameFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/regionFragment"
+        android:name="com.example.sonetassignment.ui.RegionFragment"
+        android:label="Region"
+        tools:layout="@layout/fragment_region" />
+    <fragment
+        android:id="@+id/countryNameFragment"
+        android:name="com.example.sonetassignment.ui.CountryNameFragment"
+        android:label="Country Name"
+        tools:layout="@layout/fragment_country_name" >
+        <action
+            android:id="@+id/action_countryNameFragment_to_regionFragment"
+            app:destination="@id/regionFragment" />
+    </fragment>
+</navigation>

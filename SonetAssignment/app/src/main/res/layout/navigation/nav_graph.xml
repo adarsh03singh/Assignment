@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/signInFragment">
+
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.gatefmguard.app.ui.SignInFragment"
+        android:label="Sign In"
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signInFragment_to_otpVerification"
+            app:destination="@id/otpVerification" />
+    </fragment>
+    <fragment
+        android:id="@+id/otpVerification"
+        android:name="com.gatefmguard.app.ui.OtpVerificationFragment"
+        android:label="Sign In"
+        tools:layout="@layout/fragment_otp_verification" >
+        <action
+            android:id="@+id/action_otpVerification_to_visitorsFragment"
+            app:destination="@id/visitorsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/visitorsFragment"
+        android:name="com.gatefmguard.app.ui.VisitorsFragment"
+        tools:layout="@layout/fragment_visitors"
+        android:label="VisitorsFragment" />
+    <fragment
+        android:id="@+id/serviceProviderFragment"
+        android:name="com.gatefmguard.app.ui.ServiceProviderFragment"
+        android:label="ServiceProviderFragment" />
+    <fragment
+        android:id="@+id/updateServiceProviderFragment"
+        android:name="com.gatefmguard.app.ui.UpdateServiceProviderFragment"
+        android:label="fragment_update_service"
+        tools:layout="@layout/fragment_update_service" />
+    <fragment
+        android:id="@+id/arrivingGuestDetailsFragment"
+        android:name="com.gatefmguard.app.ui.ArrivingGuestDetailsFragment"
+        android:label="Arriving Guest"
+        tools:layout="@layout/fragment_arriving_guest_details" />
+</navigation>
