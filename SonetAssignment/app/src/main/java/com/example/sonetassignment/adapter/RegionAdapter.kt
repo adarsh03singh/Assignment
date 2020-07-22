@@ -9,9 +9,10 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sonetassignment.R
+import com.example.sonetassignment.model.regionModelList.RegionModel
 
 
-class RegionAdapter(val list: List<String?>?) : RecyclerView.Adapter<RegionAdapter.ViewHolder>() {
+class RegionAdapter(val list: List<RegionModel>?) : RecyclerView.Adapter<RegionAdapter.ViewHolder>() {
 
     var navcontroller: NavController? = null
 
@@ -23,16 +24,15 @@ class RegionAdapter(val list: List<String?>?) : RecyclerView.Adapter<RegionAdapt
         return ViewHolder(v)
     }
 
-    /*class CustomViewHolder(val view:View):RecyclerView.ViewHolder(view)*/
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         if (list != null) {
-            holder.regionName.setText(list.get(position))
+            val subrRegion = list.get(position).subregion
+            val population = list.get(position).population
+
+            holder.regionName.setText(subrRegion + "," + "population" + "-"+ population)
         }
 
-//    holder.parentLayout.setOnClickListener {
-//        navcontroller!!.navigate(R.id.action_countryNameFragment_to_regionFragment)
-//    }
     }
 
     override fun getItemCount(): Int {
@@ -46,7 +46,6 @@ class RegionAdapter(val list: List<String?>?) : RecyclerView.Adapter<RegionAdapt
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val regionName: TextView = itemView.findViewById(R.id.countryName)
-        val parentLayout: CardView = itemView.findViewById(R.id.countryParentLayout)
     }
 
     override fun getItemId(position: Int): Long {

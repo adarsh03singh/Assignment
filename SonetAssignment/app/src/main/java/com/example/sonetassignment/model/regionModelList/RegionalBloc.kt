@@ -1,4 +1,4 @@
-package com.example.sonetassignment.model
+package com.example.sonetassignment.model.regionModelList
 
 
 import com.google.gson.annotations.SerializedName

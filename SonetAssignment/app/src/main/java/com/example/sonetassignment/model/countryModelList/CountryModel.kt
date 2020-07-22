@@ -1,11 +1,18 @@
-package com.example.sonetassignment.model
+package com.example.sonetassignment.model.countryModelList
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.example.sonetassignment.utils.CountryTypeConverters
 
 
-import com.google.gson.annotations.SerializedName
+@TypeConverters(CountryTypeConverters::class)
+@Entity(tableName = "country_List")
 
-data class countryModel(
-    val alpha2Code: String?,
-    val alpha3Code: String?,
+data class CountryModel(
+    @PrimaryKey(autoGenerate = false)
+    val alpha2Code: String,
+    val alpha3Code: String ?,
     val altSpellings: List<String?>?,
     val area: Float?,
     val borders: List<String?>?,

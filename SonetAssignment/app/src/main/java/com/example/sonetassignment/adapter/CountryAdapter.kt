@@ -1,18 +1,21 @@
 package com.example.sonetassignment.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sonetassignment.R
+import com.example.sonetassignment.model.countryModelList.CountryModel
 import java.lang.Exception
 
 
-class CountryAdapter(val list: List<String?>?) : RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
+class CountryAdapter(val list: List<CountryModel>) : RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
 
 
     var navcontroller: NavController? = null
@@ -28,12 +31,22 @@ class CountryAdapter(val list: List<String?>?) : RecyclerView.Adapter<CountryAda
     /*class CustomViewHolder(val view:View):RecyclerView.ViewHolder(view)*/
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        if (list != null) {
-            holder.countryName.setText(list.get(position))
+        if (!list.equals(null)) {
+            try {
+                val name = list.get(position).name
+                val regionName = list.get(position).region
+                val latlng = list.get(position).latlng
+                holder.countryName.setText(name +" " +latlng!![0].toString()!! + " " + latlng[1]!!.toString() )
+                Log.d("ghhghg","hhjhj")
+            }catch (e: IndexOutOfBoundsException){
+                e.printStackTrace()
+            }
+
         }
 
         holder.parentLayout.setOnClickListener {
-            navcontroller!!.navigate(R.id.action_countryNameFragment_to_regionFragment)
+            val bundle = bundleOf("regionName" to list.get(position).region)
+            navcontroller!!.navigate(R.id.action_countryNameFragment_to_regionFragment, bundle)
         }
     }
 

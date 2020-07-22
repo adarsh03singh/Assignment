@@ -1,24 +1,21 @@
 package com.example.sonetassignment.ui
 
 
-import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sonetassignment.R
 import com.example.sonetassignment.adapter.RegionAdapter
-import com.example.sonetassignment.model.countryModel
-import com.example.sonetassignment.network.Apis
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.example.sonetassignment.databinding.FragmentRegionBinding
+import com.example.sonetassignment.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_region.*
-import kotlinx.coroutines.runBlocking
-import retrofit2.Response
-import java.lang.reflect.Type
+import com.example.sonetassignment.model.regionModelList.RegionModel
 
 
 /**
@@ -26,46 +23,57 @@ import java.lang.reflect.Type
  */
 class RegionFragment : Fragment() {
 
-    var regionName : List<String?>? = null
+
+    lateinit var viewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_region, container, false)
+        val view = inflater.inflate(R.layout.fragment_region, container, false)
+
+        val binding: FragmentRegionBinding = FragmentRegionBinding.bind(view)
+        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        binding.regionViewmodel = viewModel
+        binding.lifecycleOwner = this
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        runAPi()
+        val regionname = arguments?.getString("regionName")
+        Log.d("hgshhg", regionname)
 
-        setUpRegionRecyclerView()
+        if(regionname != null){
+
+                viewModel.heatRegionApi(regionname)
+
+        }
+
+        viewModel.getAllRegionData().observe(viewLifecycleOwner,
+            androidx.lifecycle.Observer<List<RegionModel>> { regionData ->
+
+                try {
+
+                    setUpRegionRecyclerView(regionData)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            })
+
     }
 
-    fun setUpRegionRecyclerView()
+    fun setUpRegionRecyclerView(regiondata : List<RegionModel>)
     {
-        val regionRecyclerViewAdapter = RegionAdapter(regionName)
+        val regionRecyclerViewAdapter = RegionAdapter(regiondata)
         region_recycler_view.adapter = regionRecyclerViewAdapter
         region_recycler_view.layoutManager = LinearLayoutManager(context,
             RecyclerView.VERTICAL,false)
         region_recycler_view.setHasFixedSize(true)
     }
 
-    fun runAPi(){
-        var response : Response<List<countryModel>>? = null
-
-        runBlocking {
-            response = Apis().GetCountriesApi()
-        }
-
-        if (response != null) {
-            if (response!!.isSuccessful) {
-                regionName = response!!.body()!!.map { it.region }
-
-            }
-        }
-    }
 
 }

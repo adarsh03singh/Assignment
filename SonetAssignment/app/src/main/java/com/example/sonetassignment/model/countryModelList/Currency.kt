@@ -1,4 +1,4 @@
-package com.example.sonetassignment.model
+package com.example.sonetassignment.model.countryModelList
 
 
 import com.google.gson.annotations.SerializedName
